@@ -1,10 +1,31 @@
-import contactsService from "../services/contactsServices.js";
+import { listContacts, removeContact } from "../services/contactsServices.js";
 
-export const getAllContacts = (req, res) => {};
+export const getAllContacts = async (req, res) => {
+    try {
+        const result = await listContacts();
+        res.json(result);
+    } catch (error) {
+        console.log(error);
+    }
+};
 
-export const getContactById = (req, res) => {};
+export const getContactById = async (req, res) => {
+    //   try {
+    //     const result = await getContact(req);
+    //     res.json(result);
+    // } catch (error) {
+    //     console.log(error);
+    // }
+};
 
-export const deleteContact = (req, res) => {};
+export const deleteContact = async (req, res) => {
+          try {
+        const result = await removeContact(req);
+        res.json(result);
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 export const createContact = (req, res) => {};
 
