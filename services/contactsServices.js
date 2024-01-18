@@ -62,3 +62,12 @@ export async function addContact(name, email, phone) {
     console.log("Error: ", err);
   }
 }
+
+export async function updateContact(id, body) {
+  // Оновлює дані контакта
+  try {
+    
+  } catch (error) {
+    
+  }
+}
