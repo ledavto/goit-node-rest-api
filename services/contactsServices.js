@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import path from "path";
-import * as fs from 'fs/promises';
+import * as fs from "fs/promises";
 
 const contactsPath = path.join("db", "contacts.json");
 
@@ -47,9 +47,8 @@ export async function removeContact(contactId) {
   }
 }
 
-
 export async function addContact(name, email, phone) {
-//Повертає об'єкт доданого контакту (з id).
+  //Повертає об'єкт доданого контакту (з id).
   try {
     const resReadFile = await fs.readFile(contactsPath, "utf8");
     const resArr = JSON.parse(resReadFile);
@@ -66,8 +65,14 @@ export async function addContact(name, email, phone) {
 export async function updateContact(id, body) {
   // Оновлює дані контакта
   try {
-    
-  } catch (error) {
-    
-  }
+    const contacts = await listContacts();
+    const index = contacts.findIndex((contact) => id === contact.id);
+    if (index === -1) {
+      return null;
+    }
+
+    contacts[index] = { id, ...body };
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+    return contacts[index];
+  } catch (error) {}
 }
