@@ -1,6 +1,6 @@
 import HttpError from "../helpers/HttpError.js";
-import { createContactSchema } from "../schemas/contactsSchemas.js";
-import { addContact, getContact, listContacts, removeContact } from "../services/contactsServices.js";
+import { createContactSchema, updateContactSchema } from "../schemas/contactsSchemas.js";
+import { addContact, getContact, listContacts, removeContact, updateContact } from "../services/contactsServices.js";
 
 export const getAllContacts = async (req, res) => {
     try {
@@ -56,4 +56,20 @@ export const createContact = async (req, res, next) => {
     }
 };
 
-export const updateContact = (req, res) => {};
+export const updateContactById = async (req, res, next) => {
+    try {
+         if (Object.keys(req.body).length ===0) {
+            throw HttpError(400, "Body must have at least one field");
+        }
+         const { error } = updateContactSchema.validate(req.body);
+         if (error) { throw HttpError(400, error.message); } 
+
+        const { id } = req.params;
+        console.log(id, req.body )
+        const result = await updateContact(id, req.body);
+        if (!result) { throw HttpError(404, "Not found"); }
+        res.json(result);
+    } catch (error) {
+       next(error)
+    }
+};
