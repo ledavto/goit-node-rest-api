@@ -4,12 +4,10 @@ const contact = new Schema(
   {
     name: {
       type: String,
-      minlength: 2,
-      maxlength: 70,
+      required: [true, 'Set name for contact'],
     },
     email: {
       type: String,
-      unique: true,
     },
     phone: {
       type: String,
@@ -19,7 +17,7 @@ const contact = new Schema(
       default: false,
     },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false}
 );
 
 export const Contact = model("contact", contact);

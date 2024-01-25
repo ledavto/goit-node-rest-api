@@ -1,6 +1,6 @@
 import HttpError from "../helpers/HttpError.js";
 import { createContactSchema, updateContactSchema } from "../schemas/contactsSchemas.js";
-import { addContact, getContact, listContacts, removeContact, updateContact } from "../services/contactsServices.js";
+import { addContact, getContact, listContacts, removeContact, updateContact, updateFavorite } from "../services/contactsServices.js";
 
 export const getAllContacts = async (req, res) => {
     try {
@@ -66,6 +66,23 @@ export const updateContactById = async (req, res, next) => {
 
         const { id } = req.params;
         const result = await updateContact(id, req.body);
+        if (!result) { throw HttpError(404, "Not found"); }
+        res.json(result);
+    } catch (error) {
+       next(error)
+    }
+};
+
+export const updateFavoriteById = async (req, res, next) => {
+    try {
+              if (Object.keys(req.body).length ===0) {
+            throw HttpError(400, "missing field favorite");
+        }
+        //  const { error } = updateContactSchema.validate(req.body);
+        //  if (error) { throw HttpError(400, error.message); } 
+
+        const { id } = req.params;
+        const result = await updateFavorite(id, req.body);
         if (!result) { throw HttpError(404, "Not found"); }
         res.json(result);
     } catch (error) {

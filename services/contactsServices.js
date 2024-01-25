@@ -29,19 +29,9 @@ export async function getContact(contactId) {
 export async function removeContact(contactId) {
   // Повертає об'єкт видаленого контакту. Повертає null, якщо контакт з таким id не знайдений.
   try {
-    const resReadDb = await Contact.remove({ _id: contactId });
+    const resReadDb = await Contact.deleteOne({ _id: contactId });
     return resReadDb;
 
-    // const resReadFile = await fs.readFile(contactsPath, "utf8");
-    // const resArr = JSON.parse(resReadFile);
-
-    // const objId = resArr.find((newArr) => newArr.id === contactId);
-    // const objDelId = resArr.filter((newArr) => newArr.id !== contactId);
-
-    // await fs.writeFile(contactsPath, JSON.stringify(objDelId));
-
-    // if (objId) return objId;
-    // return null;
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -50,13 +40,8 @@ export async function removeContact(contactId) {
 export async function addContact(name, email, phone) {
   //Повертає об'єкт доданого контакту (з id).
   try {
-    const resReadFile = await fs.readFile(contactsPath, "utf8");
-    const resArr = JSON.parse(resReadFile);
-
-    const addObj = { id: nanoid(), name, email, phone };
-    resArr.push(addObj);
-    await fs.writeFile(contactsPath, JSON.stringify(resArr));
-    return addObj;
+    const resAddDb = await Contact.create({ name, email, phone});
+    return resAddDb;
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -65,14 +50,19 @@ export async function addContact(name, email, phone) {
 export async function updateContact(id, body) {
   // Оновлює дані контакта
   try {
-    const contacts = await listContacts();
-    const index = contacts.findIndex((contact) => id === contact.id);
-    if (index === -1) {
-      return null;
-    }
 
-    contacts[index] = { id, ...body };
-    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-    return contacts[index];
+    await Contact.updateOne({ _id:id}, body);
+    return await Contact.find({ _id: id });
+
+  } catch (error) {}
+}
+
+export async function updateFavorite(id, body) {
+  // Оновлює дані контакта
+  try {
+    
+    await Contact.updateOne({ _id:id}, body);
+    return await Contact.find({ _id: id });
+
   } catch (error) {}
 }
