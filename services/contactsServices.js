@@ -1,15 +1,16 @@
 import { nanoid } from "nanoid";
 import path from "path";
 import * as fs from "fs/promises";
+import mongoose from "mongoose";
+import { Contact } from "./schemas.js";
 
 const contactsPath = path.join("db", "contacts.json");
 
 export async function listContacts() {
   //Повертає масив контактів.
   try {
-    const resReadFile = await fs.readFile(contactsPath, "utf8");
-    const resArr = JSON.parse(resReadFile);
-    return resArr;
+    const resReadDb = await Contact.find();
+    return resReadDb;
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -18,12 +19,8 @@ export async function listContacts() {
 export async function getContact(contactId) {
   //Повертає об'єкт контакту з таким id. Повертає null, якщо контакт з таким id не знайдений.
   try {
-    const resReadFile = await fs.readFile(contactsPath, "utf8");
-    const resArr = JSON.parse(resReadFile);
-
-    const resId = resArr.find((newArr) => newArr.id === contactId);
-    if (resId) return resId;
-    return null;
+    const resReadDb = await Contact.find({ _id: contactId });
+    return resReadDb;
   } catch (err) {
     console.log("Error: ", err);
   }
@@ -32,16 +29,19 @@ export async function getContact(contactId) {
 export async function removeContact(contactId) {
   // Повертає об'єкт видаленого контакту. Повертає null, якщо контакт з таким id не знайдений.
   try {
-    const resReadFile = await fs.readFile(contactsPath, "utf8");
-    const resArr = JSON.parse(resReadFile);
+    const resReadDb = await Contact.remove({ _id: contactId });
+    return resReadDb;
 
-    const objId = resArr.find((newArr) => newArr.id === contactId);
-    const objDelId = resArr.filter((newArr) => newArr.id !== contactId);
+    // const resReadFile = await fs.readFile(contactsPath, "utf8");
+    // const resArr = JSON.parse(resReadFile);
 
-    await fs.writeFile(contactsPath, JSON.stringify(objDelId));
+    // const objId = resArr.find((newArr) => newArr.id === contactId);
+    // const objDelId = resArr.filter((newArr) => newArr.id !== contactId);
 
-    if (objId) return objId;
-    return null;
+    // await fs.writeFile(contactsPath, JSON.stringify(objDelId));
+
+    // if (objId) return objId;
+    // return null;
   } catch (err) {
     console.log("Error: ", err);
   }

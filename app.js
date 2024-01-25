@@ -1,10 +1,29 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import dotenv from "dotenv";
 
 import contactsRouter from "./routes/contactsRouter.js";
+import mongoose from "mongoose";
 
-export const app = express();
+const app = express();
+
+dotenv.config();
+// dotenv.config({ path: process.env.NODE_ENV === "production" ? "./.env" : });
+
+const DB_HOST =
+  "mongodb+srv://Sergii:GeZ3SIUFrS09oG2P@cluster0.vvimffh.mongodb.net/db-contacts?retryWrites=true&w=majority";
+
+mongoose
+  .connect(DB_HOST)
+  .then(() => {
+    app.listen(3000);
+    console.log("Server is running. Use our API on port: 3000");
+  })
+  .catch((error) => {
+    console.log(error.message);
+    process.exit(1);
+  });
 
 app.use(morgan("tiny"));
 app.use(cors());
