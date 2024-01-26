@@ -11,13 +11,12 @@ const app = express();
 dotenv.config();
 // dotenv.config({ path: process.env.NODE_ENV === "production" ? "./.env" : });
 
-const DB_HOST =
-  "mongodb+srv://Sergii:GeZ3SIUFrS09oG2P@cluster0.vvimffh.mongodb.net/db-contacts?retryWrites=true&w=majority";
+const { DB_HOST, PORT } = process.env; // Из файла .env
 
 mongoose
   .connect(DB_HOST)
   .then(() => {
-    app.listen(3000);
+    app.listen(PORT);
     console.log("Database connection successful");
   })
   .catch((error) => {
