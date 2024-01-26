@@ -5,10 +5,11 @@ import {
   updateContactSchema,
   updateFavoriteSchema,
 } from "../models/schemas.js";
+import { addContact, getContact, listContacts, removeContact, updateContact, updateFavorite } from "../services/contactsServices.js";
 
 export const getAllContacts = async (req, res) => {
   try {
-    const result = await Contact.find();
+    const result = await listContacts();
     res.status(200).json(result);
   } catch (error) {
     HttpError(500, "Server error!");
@@ -17,7 +18,7 @@ export const getAllContacts = async (req, res) => {
 
 export const getContactById = async (req, res, next) => {
   try {
-    const result = await Contact.findById(req.params.id);
+    const result = await getContact(req.params.id);
     if (!result) {
       throw HttpError(404); //"Not found"
     }
@@ -30,7 +31,7 @@ export const getContactById = async (req, res, next) => {
 
 export const deleteContact = async (req, res, next) => {
   try {
-    const result = await Contact.findByIdAndDelete(req.params.id);
+    const result = await removeContact(req.params.id);
     if (!result) {
       throw HttpError(404); //"Not found"
     }
@@ -47,9 +48,9 @@ export const createContact = async (req, res, next) => {
     if (error) {
       throw HttpError(400, error.message);
     }
-
+    
     const { name, email, phone } = req.body;
-    const result = await Contact.create({ name, email, phone });
+    const result = await addContact( name, email, phone );
     if (!result) {
       throw HttpError(404);
     }
@@ -72,7 +73,7 @@ export const updateContactById = async (req, res, next) => {
     }
 
     const { id } = req.params;
-    const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+    const result = await updateContact(id, req.body);
     if (!result) {
       throw HttpError(404, "Not found");
     }
@@ -94,7 +95,7 @@ export const updateFavoriteById = async (req, res, next) => {
     }
 
     const { id } = req.params;
-    const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+    const result = await updateFavorite(id, req.body);
     if (!result) {
       throw HttpError(404, "Not found");
     }
