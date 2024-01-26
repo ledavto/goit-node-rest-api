@@ -3,6 +3,7 @@ import {
   Contact,
   createContactSchema,
   updateContactSchema,
+  updateFavoriteSchema,
 } from "../models/schemas.js";
 
 export const getAllContacts = async (req, res) => {
@@ -61,6 +62,7 @@ export const createContact = async (req, res, next) => {
 
 export const updateContactById = async (req, res, next) => {
   try {
+    console.log(req);
     if (Object.keys(req.body).length === 0) {
       throw HttpError(400, "Body must have at least one field");
     }
@@ -82,7 +84,7 @@ export const updateContactById = async (req, res, next) => {
 
 export const updateFavoriteById = async (req, res, next) => {
   try {
-    const { error } = createContactSchema.validate(req.body);
+    const { error } = updateFavoriteSchema.validate(req.body);
     if (error) {
       throw HttpError(400, error.message);
     }
@@ -92,7 +94,7 @@ export const updateFavoriteById = async (req, res, next) => {
     }
 
     const { id } = req.params;
-    const result = await Contact.findByIdAndUpdate(id, req.body);
+    const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
     if (!result) {
       throw HttpError(404, "Not found");
     }
