@@ -1,5 +1,5 @@
 import { HttpError } from "../../helpers/index.js";
-import { updateFavoriteSchema } from "../../models/schemas.js";
+import { updateFavoriteSchema } from "../../models/contactSchema.js";
 import { updateFavorite } from "../../services/contactsServices/index.js";
 
 const updateFavoriteById = async (req, res, next) => {

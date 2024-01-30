@@ -1,5 +1,5 @@
 import { HttpError } from "../../helpers/index.js";
-import { updateContactSchema } from "../../models/schemas.js";
+import { updateContactSchema } from "../../models/contactSchema.js";
 import { updateContact } from "../../services/contactsServices/index.js";
 
 const updateContactById = async (req, res, next) => {
