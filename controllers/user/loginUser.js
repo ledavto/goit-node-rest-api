@@ -8,12 +8,13 @@ const loginUserCtrl = async (req, res, next) => {
     //   throw HttpError(400, error.message);
     // }
 
-    console.log(req.body);
 
-    const { user, token } = await loginUserSrv(req.body);
+    const { user, token} = await loginUserSrv(req.body);
+
+    console.log(token);
 
     res.status(200).json({
-      token: "exampletoken",
+      token,
       user: {
         email: user.email,
         subscription: user.subscription,

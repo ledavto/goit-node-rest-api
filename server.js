@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { app } from "./app.js";
 
 // Sergii     GeZ3SIUFrS09oG2P
+// JWT_SECRET=fhfgjfgjgjtysdfcmnvlkdfg4w545pyp56t4679-0egdpogd9
 // npm install mongoose --save
 // npm i dotenv
 // npm i jsonwebtoken
