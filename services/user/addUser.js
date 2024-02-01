@@ -1,9 +1,16 @@
 import { User } from "../../models/userSchema.js";
+import { signToken } from "./jwtServices.js";
 
-async function addUser(body) {
+async function addUserSrv(userData) {
   //Повертає об'єкт доданого юзера (з id).
-  const resAddDb = await User.create(body);
-  return resAddDb;
+  const resAddDb = await User.create(userData);
+
+  //Получаем токен
+  const token = signToken(userData.id);
+
+  console.log(token);
+
+  return { user: resAddDb };
 }
 
-export { addUser };
+export { addUserSrv };

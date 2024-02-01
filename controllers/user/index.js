@@ -1,3 +1,5 @@
-import { registerUser } from "./registerUser.js";
+import { registerUserCtrl } from "./registerUser.js";
+import { loginUserCtrl } from "./loginUser.js";
+import { logoutUserCtrl } from "./logoutUser.js";
 
-export { registerUser };
+export { registerUserCtrl, loginUserCtrl, logoutUserCtrl };

@@ -1,19 +1,22 @@
-import { JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { HttpError } from "../../helpers/index.js";
+import dotenv from "dotenv";
 
-const { JWT_SECRET} = process.env; // Из файла .env
+dotenv.config();
 
-const signToken = (id) => jwt.sign({ id }, JWT_SECRET, { expireIn: '1h' });
+const { JWT_SECRET } = process.env; // Из файла .env
+
+const signToken = (id) => jwt.sign({ id }, JWT_SECRET, { expireIn: "1h" });
 
 const checkToken = (token) => {
-    if (!token) throw new HttpError(401, 'Token is wrong');
+  if (!token) throw new HttpError(401, "Not authorized");
 
-    try {
-        const { id } = jwt.verify(token, JWT_SECRET);
-        return id;
-    } catch (error) {
-        throw new HttpError()
-    }
-}
+  try {
+    const { id } = jwt.verify(token, JWT_SECRET);
+    return id;
+  } catch (error) {
+    throw new HttpError(401, "Not authorized");
+  }
+};
 
 export { signToken, checkToken };

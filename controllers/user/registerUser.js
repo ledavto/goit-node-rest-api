@@ -1,21 +1,36 @@
 import { HttpError } from "../../helpers/index.js";
-import { addUser } from "../../services/user/index.js";
+import { User } from "../../models/userSchema.js";
+import { addUserSrv } from "../../services/user/index.js";
 
-const registerUser = async (req, res, next) => {
+const registerUserCtrl = async (req, res, next) => {
   try {
-    // const { error } = createContactSchema.validate(req.body);
-    // if (error) {
-    //   throw HttpError(400, error.message);
-    // }
+    //Валидация
+    const { error } = User.validate(req.body);
+    if (error) {
+      throw HttpError(400, error.message);
+    }
 
-    const newUser = await addUser(req.body);
-    res.json({
-      email: newUser.email,
-      subscription: newUser.subscription,
+    //Проверка на уникальность Email
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      return res.status(409).json({
+        status: "error",
+        code: 409,
+        message: "Email is already in use",
+        data: "Conflict",
+      });
+    }
+
+    const { email, subscription, token } = await addUserSrv(req.body);
+    res.status(201).json({
+      user: {
+        email,
+        subscription,
+      },
     });
   } catch (error) {
     next(error);
   }
 };
 
-export { registerUser };
+export { registerUserCtrl };

@@ -1,4 +1,5 @@
-import { addUser } from "./addUser.js";
+import { addUserSrv } from "./addUser.js";
 import { signToken, checkToken } from "./jwtServices.js";
+import { loginUserSrv } from "./loginUser.js";
 
-export { addUser, signToken, checkToken };
+export { addUserSrv, signToken, checkToken, loginUserSrv };
