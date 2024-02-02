@@ -21,7 +21,7 @@ const registerUserCtrl = async (req, res, next) => {
       });
     }
 
-    const { email, subscription, token } = await addUserSrv(req.body);
+    const { email, subscription } = await addUserSrv(req.body);
     res.status(201).json({
       user: {
         email,

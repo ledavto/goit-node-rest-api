@@ -6,7 +6,7 @@ dotenv.config();
 
 const { JWT_SECRET } = process.env; // Из файла .env
 
-const signToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: '1h' });
+const signToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: "1h" });
 
 const checkToken = (token) => {
   if (!token) throw new HttpError(401, "Not authorized");
@@ -15,7 +15,7 @@ const checkToken = (token) => {
     const { id } = jwt.verify(token, JWT_SECRET);
     return id;
   } catch (error) {
-    throw new HttpError(401, "Not authorized");
+    throw HttpError(401, "Not authorized");
   }
 };
 
