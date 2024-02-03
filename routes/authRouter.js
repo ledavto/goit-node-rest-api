@@ -1,9 +1,11 @@
 import express from "express";
 import {
+  currentUserCtrl,
   loginUserCtrl,
   logoutUserCtrl,
   registerUserCtrl,
 } from "../controllers/user/index.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 const usersRouter = express.Router();
 
@@ -11,6 +13,6 @@ usersRouter
   .post("/register", registerUserCtrl)
   .post("/login", loginUserCtrl)
   .post("/logout", logoutUserCtrl)
-  .post("/current", currentUserCtrl);
+  .get("/current", protect, currentUserCtrl);
 
 export default usersRouter;

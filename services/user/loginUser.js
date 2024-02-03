@@ -5,7 +5,7 @@ import { signToken } from "./jwtServices.js";
 async function loginUserSrv({ email, password }) {
   //Повертає об'єкт доданого юзера (з id).
   const user = await User.findOne({ email });
-  if (!user) throw HttpError(401, "User data not found");
+  if (!user) throw HttpError(401, "Email or password is wrong");
 
   const isPasswordValidate = await user.checkPassword(password, user.password);
 
@@ -19,7 +19,7 @@ async function loginUserSrv({ email, password }) {
   //Добавляем в базу значение ТОКЕНА для пользователя который логинится
   await User.findByIdAndUpdate(user.id, user);
 
-  return { user };
+  return { user, token };
 }
 
 export { loginUserSrv };

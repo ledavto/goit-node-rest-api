@@ -9,7 +9,9 @@ const { JWT_SECRET } = process.env; // Из файла .env
 const signToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: "1h" });
 
 const checkToken = (token) => {
-  if (!token) throw new HttpError(401, "Not authorized");
+
+  console.log(token);
+  if (!token) throw HttpError(401, "Not authorized");
 
   try {
     const { id } = jwt.verify(token, JWT_SECRET);

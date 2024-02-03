@@ -5,12 +5,10 @@ async function addUserSrv(userData) {
   //Повертає об'єкт доданого юзера (з id).
   const resAddDb = await User.create(userData);
 
-  //Получаем токен
-  const token = signToken(userData.id);
+  // //Получаем токен
+  // const token = signToken(userData.id);
 
-  console.log(token);
-
-  return { user: resAddDb };
+  return resAddDb ;
 }
 
 export { addUserSrv };

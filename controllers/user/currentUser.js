@@ -1,22 +1,17 @@
 import { HttpError } from "../../helpers/index.js";
-import { loginUserSrv } from "../../services/user/index.js";
+import { User } from "../../models/userSchema.js";
+import { currentUserSrv} from "../../services/user/index.js";
 
 const currentUserCtrl = async (req, res, next) => {
   try {
-    // const { error } = createContactSchema.validate(req.body);
-    // if (error) {
-    //   throw HttpError(400, error.message);
-    // }
+    
+    console.log("======", req.user);
+    const { email, subscription } = await currentUserSrv(req.user);
 
-    const { user, token } = await currentUserSrv(req.body);
-
-    // res.status(200).json({
-    //   token,
-    //   user: {
-    //     email: user.email,
-    //     subscription: user.subscription,
-    //   },
-    // });
+    res.status(200).json({
+      email,
+      subscription
+    });
   } catch (error) {
     next(error);
   }
