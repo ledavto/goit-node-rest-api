@@ -4,11 +4,12 @@ const getUserSrv = async (id) => User.findById(id);
 
 async function currentUserSrv({ token }) {
   //Повертає об'єкт доданого юзера (з id).
+  try {
+    const user = await User.findOne({ token });
+    if (!user) throw HttpError(401, "User data not found");
 
-  const user = await User.findOne({token});
-  if (!user) throw HttpError(401, "User data not found");
-  
-  return user;
+    return user;
+  } catch (error) {}
 }
 
 export { getUserSrv, currentUserSrv };

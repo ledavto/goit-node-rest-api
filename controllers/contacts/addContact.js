@@ -10,7 +10,7 @@ const createContact = async (req, res, next) => {
     }
 
     const { name, email, phone } = req.body;
-    const result = await addContact(name, email, phone);
+    const result = await addContact(name, email, phone, req.user.id);
     if (!result) {
       throw HttpError(404);
     }

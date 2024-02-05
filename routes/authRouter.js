@@ -5,7 +5,7 @@ import {
   logoutUserCtrl,
   registerUserCtrl,
 } from "../controllers/user/index.js";
-import { protect } from "../middlewares/authMiddleware.js";
+import { protect } from "../middlewares/index.js";
 
 const usersRouter = express.Router();
 

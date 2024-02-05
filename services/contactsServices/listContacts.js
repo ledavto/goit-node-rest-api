@@ -1,8 +1,9 @@
 import { Contact } from "../../models/contactSchema.js";
 
-async function listContacts() {
+async function listContacts(id) {
   //Повертає масив контактів.
-  return Contact.find();
+  console.log("-----------", id);
+  return Contact.find({ owner: { $lte: id } });
 }
 
 export { listContacts };

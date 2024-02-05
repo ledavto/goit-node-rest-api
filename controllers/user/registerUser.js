@@ -5,8 +5,8 @@ import { addUserSrv } from "../../services/user/index.js";
 const registerUserCtrl = async (req, res, next) => {
   try {
     //Валидация
-    const  {error}  = await User.validate(req.body);
-    if (error)  throw HttpError(400, error.message);
+    const { error } = await User.validate(req.body);
+    if (error) throw HttpError(400, error.message);
 
     //Проверка на уникальность Email
     const user = await User.findOne({ email: req.body.email });
