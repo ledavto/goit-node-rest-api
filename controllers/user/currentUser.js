@@ -4,8 +4,11 @@ import { currentUserSrv } from "../../services/user/index.js";
 
 const currentUserCtrl = async (req, res, next) => {
   try {
-    if (!req.user.token) throw HttpError("401", "Not authorized");
-    const { email, subscription } = await currentUserSrv(req.user);
+     const token =
+      req.headers.authorization?.startsWith("Bearer ") &&
+      req.headers.authorization.split(" ")[1];
+
+    const { email, subscription } = await currentUserSrv(token);
 
     res.status(200).json({
       email,

@@ -19,7 +19,7 @@ const protect = async (req, res, next) => {
 
     if (!currentUser) throw HttpError("401", "Not authorized");
 
-    req.user = currentUser; // Чтобы в других мидлварах иметь данные Юзера
+    // req.user = currentUser; // Чтобы в других мидлварах иметь данные Юзера
 
     next();
   } catch (error) {
