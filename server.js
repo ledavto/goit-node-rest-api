@@ -10,6 +10,9 @@ import { app } from "./app.js";
 // npm i jsonwebtoken
 // npm i bcrypt
 
+// npm install --save multer
+// npm i gravatar
+
 const DB_HOST =
   "mongodb+srv://Sergii:GeZ3SIUFrS09oG2P@cluster0.vvimffh.mongodb.net/db-contacts?retryWrites=true&w=majority";
 

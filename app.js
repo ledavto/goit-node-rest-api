@@ -7,6 +7,28 @@ import contactsRouter from "./routes/contactsRouter.js";
 import usersRouter from "./routes/authRouter.js";
 import mongoose from "mongoose";
 
+import multer from "multer";
+import path from "path";
+
+const uploadDir = path.join(process.cwd(), 'public', 'avatars');
+// const storeImage = path.join(process.cwd(), 'images');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+  limits: {
+    fileSize: 1048576,
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
+
 const app = express();
 
 dotenv.config();
@@ -28,6 +50,8 @@ mongoose
 app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
+
+app.use(express.static('public'));
 
 app.use("/api/contacts", contactsRouter);
 app.use("/users", usersRouter);
