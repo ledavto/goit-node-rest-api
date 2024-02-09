@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 import multer from "multer";
 import path from "path";
 
-const uploadDir = path.join(process.cwd(), 'public', 'avatars');
+const uploadDir = path.join(process.cwd(), "public", "avatars");
 // const storeImage = path.join(process.cwd(), 'images');
 
 const storage = multer.diskStorage({
@@ -51,7 +51,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.use("/api/contacts", contactsRouter);
 app.use("/users", usersRouter);

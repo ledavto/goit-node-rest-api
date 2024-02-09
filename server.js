@@ -12,6 +12,7 @@ import { app } from "./app.js";
 
 // npm install --save multer
 // npm i gravatar
+// npm i jimp
 
 const DB_HOST =
   "mongodb+srv://Sergii:GeZ3SIUFrS09oG2P@cluster0.vvimffh.mongodb.net/db-contacts?retryWrites=true&w=majority";
