@@ -2,6 +2,7 @@ import multer from "multer";
 import path from "path";
 import { HttpError } from "../helpers/index.js";
 import { checkToken, getUserSrv } from "../services/user/index.js";
+import { nanoid } from "nanoid";
 
 const protect = async (req, res, next) => {
   try {
@@ -34,9 +35,8 @@ const multerStorage = multer.diskStorage({
   filename: (req, file, cbk) => {
     const extension = file.mimetype.split("/")[1]; // 'image/png'
 
-    console.log(req.token);
     // <userId>-<randomId>.<extension>
-    cbk(null, `12345.${extension}`);
+    cbk(null, `${nanoid()}.${extension}`);
     // cbk(null, `${req.user.id}-${v4()}.${extension}`);
   },
 });
