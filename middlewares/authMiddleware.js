@@ -35,9 +35,7 @@ const multerStorage = multer.diskStorage({
   filename: (req, file, cbk) => {
     const extension = file.mimetype.split("/")[1]; // 'image/png'
 
-    // <userId>-<randomId>.<extension>
     cbk(null, `${nanoid()}.${extension}`);
-    // cbk(null, `${req.user.id}-${v4()}.${extension}`);
   },
 });
 

@@ -1,10 +1,8 @@
-// import multer from "multer";
-// import sharp from "sharp";
-// import * as fse from "fs-extra";
 import Jimp from "jimp";
 import { HttpError } from "../../helpers/index.js";
 import { User } from "../../models/userSchema.js";
 import path from "path";
+import  fs  from "fs/promises";
 
 async function editAvatarSrv(token, file) {
   try {
@@ -23,6 +21,8 @@ async function editAvatarSrv(token, file) {
         // .greyscale() // set greyscale
         .write(path.join(newPath, avaFile)); // save
     });
+
+    fs.unlink(file.path);
 
     if (file) {
       user.avatarURL= avaFile ;
