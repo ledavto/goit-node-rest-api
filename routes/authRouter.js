@@ -15,6 +15,7 @@ usersRouter
   .post("/login", loginUserCtrl)
   .post("/logout", logoutUserCtrl)
   .get("/current", protect, currentUserCtrl)
-  .patch("/avatars", protect, uploadAvatar, editAvatar);
+  .patch("/avatars", protect, uploadAvatar, editAvatar)
+  .get("/verify/:verificationToken", verifyUserEmailCtrl);
 
 export default usersRouter;

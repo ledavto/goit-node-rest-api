@@ -14,6 +14,12 @@ import { app } from "./app.js";
 // npm i gravatar
 // npm i jimp
 
+
+
+// echo "export SENDGRID_API_KEY='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'" > sendgrid.env
+// echo "sendgrid.env" >> .gitignore
+// source ./sendgrid.env
+
 const DB_HOST =
   "mongodb+srv://Sergii:GeZ3SIUFrS09oG2P@cluster0.vvimffh.mongodb.net/db-contacts?retryWrites=true&w=majority";
 

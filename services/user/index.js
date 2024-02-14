@@ -5,6 +5,7 @@ import { getUserSrv } from "./getUser.js";
 import { logoutUserSrv } from "./logOut.js";
 import { currentUserSrv } from "./getUser.js";
 import { editAvatarSrv } from "./editAvatar.js";
+import {verifyUserEmailSrv} from "./verifyUserEmail.js"
 
 export {
   addUserSrv,
@@ -15,4 +16,5 @@ export {
   logoutUserSrv,
   currentUserSrv,
   editAvatarSrv,
+  verifyUserEmailSrv
 };

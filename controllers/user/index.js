@@ -3,6 +3,7 @@ import { loginUserCtrl } from "./loginUser.js";
 import { logoutUserCtrl } from "./logoutUser.js";
 import { currentUserCtrl } from "./currentUser.js";
 import { editAvatar } from "./editAvatar.js";
+import {verifyUserEmailCtrl} from "./verifyUserEmail.js"
 
 export {
   registerUserCtrl,
@@ -10,4 +11,5 @@ export {
   logoutUserCtrl,
   currentUserCtrl,
   editAvatar,
+  verifyUserEmailCtrl
 };
