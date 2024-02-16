@@ -5,6 +5,7 @@ import {
   loginUserCtrl,
   logoutUserCtrl,
   registerUserCtrl,
+  verifyUserEmailCtrl,
 } from "../controllers/user/index.js";
 import { protect, uploadAvatar } from "../middlewares/index.js";
 
