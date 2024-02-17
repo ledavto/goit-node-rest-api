@@ -25,8 +25,11 @@ async function editAvatarSrv(token, file) {
     fs.unlink(file.path);
 
     if (file) {
-      user.avatarURL= avaFile ;
+      user.avatarURL = avaFile;
+      await User.findByIdAndUpdate(user.id, user);
     }
+    
+
     return user;
   } catch (error) {}
 }

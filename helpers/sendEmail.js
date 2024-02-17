@@ -6,16 +6,12 @@ const { SENDGRID_API_KEY } = process.env; // Из файла .env
 
 sendgrid.setApiKey(SENDGRID_API_KEY);
 
-const sendEmail = () => {
+const sendEmail = async (data) => {
   const email = {
-    to: "lodobo8391@tupanda.com",
+    ...data, 
     from: "sergiibort@gmail.com",
-    subject: "Temp",
-    html: "<h1>Local host Verify </h1>",
   };
-
-  sendgrid
-    .send(email)
+  await sendgrid.send(email)
     .then(() => console.log("Email send SUCCESS"))
     .catch((error) => console.log(error.message));
 };

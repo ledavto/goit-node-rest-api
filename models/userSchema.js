@@ -26,7 +26,7 @@ const userSchema = new Schema(
   },
   verificationToken: {
     type: String,
-    required: [true, 'Verify token is required'],
+    // required: [true, 'Verify token is required'],
   },
   },
   { versionKey: false, timestamps: true }
@@ -41,7 +41,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-//Для обработки ошибок валидации схемы
+//Для обработки ошибок валидации схемы и изменения статуса ошибки с 500 на 400
 userSchema.post("save", (error, data, next) => {
   error.status = 400;
   next();
@@ -61,7 +61,11 @@ const loginSchema = Joi.object({
   token: Joi.string(),
 });
 
-const schema = { registerSchema, loginSchema };
+const reSendVerifySchema = Joi.object({
+  email:Joi.string().required(),
+})
+
+const schema = { registerSchema, loginSchema, reSendVerifySchema };
 
 const User = model("user", userSchema);
 

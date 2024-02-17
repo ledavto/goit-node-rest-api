@@ -9,7 +9,9 @@ const loginUserCtrl = async (req, res, next) => {
       throw HttpError(400, error.message);
     }
 
-    const { user, token } = await loginUserSrv(req.body);
+    const { user, token} = await loginUserSrv(req.body);
+
+    if (!user.verify) throw HttpError(404, "User not verification!");
 
     res.status(200).json({
       token,

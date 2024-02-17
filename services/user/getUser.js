@@ -2,6 +2,8 @@ import { User } from "../../models/userSchema.js";
 
 const getUserSrv = async (id) => User.findById(id);
 
+// const getUserVerifiSrv = async (code) => User.findOne({ verificationToken: code });
+
 async function currentUserSrv( token ) {
   //Повертає об'єкт доданого юзера (з id).
   try {
@@ -12,4 +14,4 @@ async function currentUserSrv( token ) {
   } catch (error) {}
 }
 
-export { getUserSrv, currentUserSrv };
+export { getUserSrv, currentUserSrv};

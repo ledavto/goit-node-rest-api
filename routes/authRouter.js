@@ -6,8 +6,11 @@ import {
   logoutUserCtrl,
   registerUserCtrl,
   verifyUserEmailCtrl,
+  reSendVerifyEmail,
 } from "../controllers/user/index.js";
 import { protect, uploadAvatar } from "../middlewares/index.js";
+import {validateBody} from "../helpers/index.js";
+import { schema } from "../models/userSchema.js";
 
 const usersRouter = express.Router();
 
@@ -17,6 +20,7 @@ usersRouter
   .post("/logout", logoutUserCtrl)
   .get("/current", protect, currentUserCtrl)
   .patch("/avatars", protect, uploadAvatar, editAvatar)
-  .get("/verify/:verificationToken", verifyUserEmailCtrl);
+  .get("/verify/:verificationToken", verifyUserEmailCtrl)
+  .post("/verify", validateBody(schema.reSendVerifySchema), reSendVerifyEmail);
 
 export default usersRouter;

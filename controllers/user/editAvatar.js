@@ -1,5 +1,3 @@
-import { HttpError } from "../../helpers/index.js";
-import { User } from "../../models/userSchema.js";
 import { editAvatarSrv } from "../../services/user/index.js";
 
 const editAvatar = async (req, res, next) => {

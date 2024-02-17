@@ -27,7 +27,6 @@ const protect = async (req, res, next) => {
 };
 
 // BASIC MULTER USAGE
-// config storage
 const multerStorage = multer.diskStorage({
   destination: (req, file, cbk) => {
     cbk(null, path.join("tmp"));

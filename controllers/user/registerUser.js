@@ -1,11 +1,13 @@
-import { HttpError } from "../../helpers/index.js";
-import { User } from "../../models/userSchema.js";
-import { addUserSrv } from "../../services/user/index.js";
+import { nanoid } from "nanoid";
+import { HttpError, sendEmail } from "../../helpers/index.js";
+import { User, schema } from "../../models/userSchema.js";
+import { addUserSrv, reSendEmailSrv } from "../../services/user/index.js";
 
 const registerUserCtrl = async (req, res, next) => {
   try {
     //Валидация
-    const { error } = await User.validate(req.body);
+    const verificationToken = nanoid();
+    const { error } = await User.validate({ ...req.body, verificationToken });
     if (error) throw HttpError(400, error.message);
 
     //Проверка на уникальность Email
@@ -19,11 +21,17 @@ const registerUserCtrl = async (req, res, next) => {
       });
     }
 
-    const { email, subscription } = await addUserSrv(req.body);
+    const { email, subscription} = await addUserSrv({ ...req.body, verificationToken });
+    
+    await sendEmail({
+      to: email,
+      subject: "Email Verifycation",
+      html: `<h1>Verify email</h1> <p>Hello, please verify email to URL</p><p>localhost:3000/users/verify/${verificationToken}</p>`
+    });
 
     res.status(201).json({
       user: {
-        email: email,
+        email,
         subscription,
       },
     });
@@ -32,4 +40,30 @@ const registerUserCtrl = async (req, res, next) => {
   }
 };
 
-export { registerUserCtrl };
+
+const reSendVerifyEmail = async (req, res, next) => {
+  try {
+
+    const { error } = await (req.body);
+    if (error) throw HttpError(400, error.message);
+    
+    const { email, verificationToken, verify } = await reSendEmailSrv(req.body.email);
+    
+    if (verify) throw HttpError(400, 'Verification has already been passed');
+
+    await sendEmail({
+      to: email,
+      subject: "Email Verifycation repeat",
+      html: `<h1>Verify email</h1> <p>Hello, please verify email to URL</p><p>localhost:3000/users/verify/${verificationToken}</p>`
+    });
+    
+      res.status(200).json({
+        "message": "Verification email sent"
+      });
+  } catch (error) {
+    next(error);
+  }
+  
+}
+
+export { registerUserCtrl, reSendVerifyEmail };

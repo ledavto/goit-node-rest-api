@@ -1,6 +1,5 @@
 import HttpError from "../../helpers/HttpError.js";
 import { User } from "../../models/userSchema.js";
-import { signToken } from "./jwtServices.js";
 
 async function logoutUserSrv({ id }) {
   //Повертає об'єкт доданого юзера (з id).

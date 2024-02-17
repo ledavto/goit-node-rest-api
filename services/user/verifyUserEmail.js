@@ -1,3 +1,5 @@
+import { User } from "../../models/userSchema.js";
+
 async function verifyUserEmailSrv( token ) {
   //Повертає об'єкт доданого юзера (з id).
   try {

@@ -1,4 +1,3 @@
-import { HttpError } from "../../helpers/index.js";
 import { logoutUserSrv } from "../../services/user/index.js";
 
 const logoutUserCtrl = async (req, res, next) => {

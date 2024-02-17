@@ -4,20 +4,6 @@ import mongoose from "mongoose";
 import { app } from "./app.js";
 import dotenv from "dotenv";
 
-// Sergii     GeZ3SIUFrS09oG2P
-// npm install mongoose --save
-// npm i dotenv
-// npm i jsonwebtoken
-// npm i bcrypt
-
-// npm install --save multer
-// npm i gravatar
-// npm i jimp
-
-//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;
-
-//npm i @sendgrid/mail
-
 dotenv.config();
 const { DB_HOST } = process.env; // Из файла .env
 
